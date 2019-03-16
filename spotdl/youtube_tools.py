@@ -214,11 +214,11 @@ def is_video(result):
 
 def generate_youtube_url(raw_song, meta_tags):
     url_fetch = GenerateYouTubeURL(raw_song, meta_tags)
-    print(url_fetch)
-    if const.args.youtube_api_key:
-        url = url_fetch.api()
-    else:
-        url = url_fetch.scrape()
+    # print(url_fetch)
+    # if const.args.youtube_api_key:
+    #     url = url_fetch.api()
+    # else:
+    url = url_fetch.scrape()
     print(url)
     return url
 

@@ -41,7 +41,7 @@ def go_pafy(raw_song, meta_tags=None):
         else:
             track_info = None
 
-    return track_info
+    return track_url
 
 
 def match_video_and_metadata(track):
@@ -78,6 +78,7 @@ def match_video_and_metadata(track):
         print(meta_tags)
 
         content = go_pafy(track, meta_tags)
+        print(content)
         if const.args.no_metadata:
             meta_tags = None
 

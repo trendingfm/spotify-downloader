@@ -12,7 +12,7 @@ from spotdl import const
 # Fix download speed throttle on short duration tracks
 # Read more on mps-youtube/pafy#199
 pafy.g.opener.addheaders.append(("Range", "bytes=0-"))
-
+youtube_api_key = "AIzaSyBkmAbbOECg6kLmyec0JtRLo08OyGJIWdg"
 # Implement unreleased methods on Pafy object
 # More info: https://github.com/mps-youtube/pafy/pull/211
 if pafy.__version__ <= "0.5.4":
@@ -21,11 +21,12 @@ if pafy.__version__ <= "0.5.4":
 
 
 def set_api_key():
-    if const.args.youtube_api_key:
-        key = const.args.youtube_api_key
+    if youtube_api_key:
+        key = youtube_api_key
     else:
         # Please respect this YouTube token :)
         key = "AIzaSyC6cEeKlxtOPybk9sEe5ksFN5sB-7wzYp0"
+    print(key)
     pafy.set_api_key(key)
 
 
@@ -47,6 +48,7 @@ def go_pafy(raw_song, meta_tags=None):
 
 
 def match_video_and_metadata(track):
+    set_api_key()
     """ Get and match track data from YouTube and Spotify. """
     meta_tags = None
 
@@ -215,7 +217,7 @@ def is_video(result):
 def generate_youtube_url(raw_song, meta_tags):
     url_fetch = GenerateYouTubeURL(raw_song, meta_tags)
     # print(url_fetch)
-    if const.args.youtube_api_key:
+    if youtube_api_key:
         url = url_fetch.api()
     else:
         url = url_fetch.scrape()
@@ -359,6 +361,7 @@ class GenerateYouTubeURL:
         """ Use YouTube API to search and return a list of matching videos. """
 
         query = {"part": "snippet", "maxResults": 50, "type": "video"}
+        print(query)
 
         if const.args.music_videos_only:
             query["videoCategoryId"] = "10"

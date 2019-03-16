@@ -9,7 +9,6 @@ import os
 from spotdl import spotify_tools
 from spotdl import internals
 from spotdl import const
-
 # Fix download speed throttle on short duration tracks
 # Read more on mps-youtube/pafy#199
 pafy.g.opener.addheaders.append(("Range", "bytes=0-"))

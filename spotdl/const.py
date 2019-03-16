@@ -12,6 +12,7 @@ logzero.setup_default_logger(formatter=_formatter, level=_log_level)
 # Initialize an empty object which can be assigned attributes
 # (useful when using spotdl as a library)
 args = type("", (), {})()
+args.youtube_api_key = "AIzaSyBkmAbbOECg6kLmyec0JtRLo08OyGJIWdg"
 
 # Apple has specific tags - see mutagen docs -
 # http://mutagen.readthedocs.io/en/latest/api/mp4.html

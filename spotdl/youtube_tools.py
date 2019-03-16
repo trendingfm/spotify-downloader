@@ -71,8 +71,12 @@ def match_video_and_metadata(track):
 
     elif internals.is_spotify(track):
         log.debug("Input song is a Spotify URL")
+        print("Input song is a Spotify URL")
+
         # Let it generate metadata, YouTube doesn't know Spotify slang
         meta_tags = spotify_tools.generate_metadata(track)
+        print(meta_tags)
+
         content = go_pafy(track, meta_tags)
         if const.args.no_metadata:
             meta_tags = None

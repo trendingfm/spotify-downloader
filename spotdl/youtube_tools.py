@@ -36,11 +36,11 @@ def go_pafy(raw_song, meta_tags=None):
     else:
         track_url = generate_youtube_url(raw_song, meta_tags)
 
-        if track_url:
-            track_info = pafy.new(track_url)
-        else:
-            track_info = None
-
+        # if track_url:
+        #     track_info = pafy.new(track_url)
+        # else:
+        #     track_info = None
+    print(track_url)
     return track_url
 
 

@@ -366,15 +366,17 @@ class GenerateYouTubeURL:
         if const.args.music_videos_only:
             query["videoCategoryId"] = "10"
 
-        if not self.meta_tags:
-            song = self.raw_song
-            query["q"] = song
-        else:
-            query["q"] = self.search_query
-        log.debug("query: {0}".format(query))
-        print("query: {0}".format(query))
+        # if not self.meta_tags:
+        #     song = self.raw_song
+        #     query["q"] = song
+        # else:
+        query["q"] = self.search_query
+        # log.debug("query: {0}".format(query))
+        print(query)
 
         data = pafy.call_gdata("search", query)
+        print(data)
+
         data["items"] = list(
             filter(lambda x: x["id"].get("videoId") is not None, data["items"])
         )

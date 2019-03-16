@@ -32,7 +32,9 @@ def set_api_key():
 def go_pafy(raw_song, meta_tags=None):
     """ Parse track from YouTube. """
     if internals.is_youtube(raw_song):
-        track_info = pafy.new(raw_song)
+        # track_info = pafy.new(raw_song)
+        track_url = generate_youtube_url(raw_song)
+
     else:
         track_url = generate_youtube_url(raw_song, meta_tags)
 
@@ -311,6 +313,7 @@ class GenerateYouTubeURL:
 
         search_url = generate_search_url(self.search_query)
         log.debug("Opening URL: {0}".format(search_url))
+        print("Opening URL: {0}".format(search_url))
 
         item = self._fetch_response(search_url).read()
         items_parse = BeautifulSoup(item, "html.parser")
@@ -362,6 +365,7 @@ class GenerateYouTubeURL:
         else:
             query["q"] = self.search_query
         log.debug("query: {0}".format(query))
+        print("query: {0}".format(query))
 
         data = pafy.call_gdata("search", query)
         data["items"] = list(
@@ -373,6 +377,7 @@ class GenerateYouTubeURL:
             "id": ",".join(i["id"]["videoId"] for i in data["items"]),
         }
         log.debug("query_results: {0}".format(query_results))
+        print("query_results: {0}".format(query_results))
 
         vdata = pafy.call_gdata("videos", query_results)
 

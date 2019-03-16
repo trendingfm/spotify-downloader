@@ -188,7 +188,7 @@ def generate_search_url(query):
     # urllib.request.quote() encodes string with special characters
     quoted_query = urllib.request.quote(query)
     # Special YouTube URL filter to search only for videos
-    url = "https://www.youtube.com/results?sp=EgIQAQ%253D%253D&q={0}".format(
+    url = "http://www.youtube.com/results?sp=EgIQAQ%253D%253D&q={0}".format(
         quoted_query
     )
     return url

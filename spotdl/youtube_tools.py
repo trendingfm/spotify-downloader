@@ -363,8 +363,7 @@ class GenerateYouTubeURL:
         query = {"part": "snippet", "maxResults": 50, "type": "video", "q": self.search_query}
         print(query)
 
-        if const.args.music_videos_only:
-            query["videoCategoryId"] = "10"
+        query["videoCategoryId"] = "10"
 
         # if not self.meta_tags:
         #     song = self.raw_song

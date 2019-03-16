@@ -239,6 +239,7 @@ class GenerateYouTubeURL:
     def _best_match(self, videos):
         if not videos:
             log.error("No videos found on YouTube for a given search")
+            print("No videos found on YouTube for a given search")
             return None
 
         """ Select the best matching video from a list of videos. """
@@ -264,9 +265,8 @@ class GenerateYouTubeURL:
                 # if the metadata could not be acquired, take the first result
                 # from Youtube because the proper song length is unknown
                 result = videos[0]
-                log.debug(
-                    "Since no metadata found on Spotify, going with the first result"
-                )
+                log.debug("Since no metadata found on Spotify, going with the first result")
+                print("Since no metadata found on Spotify, going with the first result")
             else:
                 # filter out videos that do not have a similar length to the Spotify song
                 duration_tolerance = 10
@@ -292,6 +292,7 @@ class GenerateYouTubeURL:
                                 self.meta_tags["artists"][0]["name"],
                             )
                         )
+                        print("{0} by {1} was not found.".format())
                         return None
 
                 result = possible_videos_by_duration[0]
@@ -334,6 +335,8 @@ class GenerateYouTubeURL:
                 videotime = x.find("span", class_="video-time").get_text()
             except AttributeError:
                 log.debug("Could not find video duration on YouTube, retrying..")
+                print("Could not find video duration on YouTube, retrying..")
+
                 return self.scrape(
                     bestmatch=bestmatch, tries_remaining=tries_remaining - 1
                 )
@@ -344,6 +347,7 @@ class GenerateYouTubeURL:
                 "videotime": videotime,
                 "seconds": internals.get_sec(videotime),
             }
+            print(youtubedetails)
             videos.append(youtubedetails)
 
         if bestmatch:

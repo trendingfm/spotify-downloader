@@ -142,7 +142,7 @@ def fetch_playlist(playlist):
         sys.exit(10)
     try:
         results = spotify.user_playlist(
-            user=None, playlist_id=playlist_id, fields="tracks,next,name"
+            user=None, playlist_id=playlist_id, fields="tracks,next,name,public"
         )
     except spotipy.client.SpotifyException:
         log.error("Unable to find playlist")

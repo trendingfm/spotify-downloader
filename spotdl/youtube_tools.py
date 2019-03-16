@@ -224,7 +224,7 @@ class GenerateYouTubeURL:
             self.search_query = raw_song
         else:
             self.search_query = internals.format_string(
-                const.args.search_format, meta_tags, force_spaces=True
+                '{artist} - {track_name}', meta_tags, force_spaces=True
             )
 
     def _best_match(self, videos):

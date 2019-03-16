@@ -19,8 +19,8 @@ spotify = None
 def generate_token():
     """ Generate the token. """
     credentials = oauth2.SpotifyClientCredentials(
-        client_id=const.args.spotify_client_id,
-        client_secret=const.args.spotify_client_secret,
+        client_id="4258b5c02f0e4d1ba32f0c354091590d",
+        client_secret="3d91ca901ac143bc8527ee91e1081486",
     )
     token = credentials.get_access_token()
     return token

@@ -43,7 +43,6 @@ def go_pafy(raw_song, meta_tags=None):
         #     track_info = pafy.new(track_url)
         # else:
         #     track_info = None
-    print(track_url)
     return track_url
 
 
@@ -83,8 +82,7 @@ def match_video_and_metadata(track):
 
         content = go_pafy(track, meta_tags)
         print(content)
-        if const.args.no_metadata:
-            meta_tags = None
+
 
     else:
         log.debug("Input song is plain text based")
@@ -221,7 +219,6 @@ def generate_youtube_url(raw_song, meta_tags):
         url = url_fetch.api()
     else:
         url = url_fetch.scrape()
-    print(url)
     return url
 
 
@@ -373,7 +370,6 @@ class GenerateYouTubeURL:
         print(query)
 
         data = pafy.call_gdata("search", query)
-        print(data)
 
         data["items"] = list(
             filter(lambda x: x["id"].get("videoId") is not None, data["items"])
@@ -396,13 +392,12 @@ class GenerateYouTubeURL:
                 "videotime": internals.videotime_from_seconds(duration_s),
                 "seconds": duration_s,
             }
-            print(youtubedetails)
             videos.append(youtubedetails)
 
         if bestmatch:
             return self._best_match(videos)
 
-        return videos
+        return videos[0]
 
     @staticmethod
     def _fetch_response(url):

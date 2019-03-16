@@ -211,10 +211,12 @@ def is_video(result):
 
 def generate_youtube_url(raw_song, meta_tags):
     url_fetch = GenerateYouTubeURL(raw_song, meta_tags)
+    print(url_fetch)
     if const.args.youtube_api_key:
         url = url_fetch.api()
     else:
         url = url_fetch.scrape()
+    print(url)
     return url
 
 
@@ -229,6 +231,7 @@ class GenerateYouTubeURL:
             self.search_query = internals.format_string(
                 '{artist} - {track_name}', meta_tags, force_spaces=True
             )
+        print(self.search_query)
 
     def _best_match(self, videos):
         if not videos:
@@ -294,7 +297,7 @@ class GenerateYouTubeURL:
             url = "http://youtube.com/watch?v={0}".format(result["link"])
         else:
             url = None
-
+        print(url)
         return url
 
     def scrape(self, bestmatch=True, tries_remaining=5):

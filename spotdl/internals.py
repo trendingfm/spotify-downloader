@@ -99,7 +99,7 @@ def format_string(string_format, tags, slugification=False, force_spaces=False):
         format_tag = "{" + formats[x] + "}"
         string_format = string_format.replace(format_tag, format_tags_sanitized[x])
 
-    if const.args.no_spaces and not force_spaces:
+    if not force_spaces:
         string_format = string_format.replace(" ", "_")
 
     return string_format
@@ -108,8 +108,7 @@ def format_string(string_format, tags, slugification=False, force_spaces=False):
 def sanitize_title(title, ok="-_()[]{}"):
     """ Generate filename of the song to be downloaded. """
 
-    if const.args.no_spaces:
-        title = title.replace(" ", "_")
+    title = title.replace(" ", "_")
 
     # replace slashes with "-" to avoid folder creation errors
     title = title.replace("/", "-").replace("\\", "-")

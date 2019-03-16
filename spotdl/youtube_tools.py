@@ -360,7 +360,7 @@ class GenerateYouTubeURL:
     def api(self, bestmatch=True):
         """ Use YouTube API to search and return a list of matching videos. """
 
-        query = {"part": "snippet", "maxResults": 50, "type": "video"}
+        query = {"part": "snippet", "maxResults": 50, "type": "video", "q": self.search_query}
         print(query)
 
         if const.args.music_videos_only:

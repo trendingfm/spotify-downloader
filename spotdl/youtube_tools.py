@@ -357,7 +357,7 @@ class GenerateYouTubeURL:
     def api(self, bestmatch=True):
         """ Use YouTube API to search and return a list of matching videos. """
 
-        query = {"part": "snippet", "maxResults": 50, "type": "video"}
+        query = {"part": "snippet", "maxResults": 5, "type": "video"}
 
         query["videoCategoryId"] = "10"
 
@@ -376,7 +376,7 @@ class GenerateYouTubeURL:
         )
         query_results = {
             "part": "contentDetails,snippet,statistics",
-            "maxResults": 50,
+            "maxResults": 5,
             "id": ",".join(i["id"]["videoId"] for i in data["items"]),
         }
         log.debug("query_results: {0}".format(query_results))

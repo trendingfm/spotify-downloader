@@ -245,59 +245,59 @@ class GenerateYouTubeURL:
             return None
 
         """ Select the best matching video from a list of videos. """
-        if const.args.manual:
-            log.info(self.raw_song)
-            log.info("0. Skip downloading this song.\n")
-            # fetch all video links on first page on YouTube
-            for i, v in enumerate(videos):
-                log.info(
-                    u"{0}. {1} {2} {3}".format(
-                        i + 1,
-                        v["title"],
-                        v["videotime"],
-                        "http://youtube.com/watch?v=" + v["link"],
+        # if const.args.manual:
+        #     log.info(self.raw_song)
+        #     log.info("0. Skip downloading this song.\n")
+        #     # fetch all video links on first page on YouTube
+        #     for i, v in enumerate(videos):
+        #         log.info(
+        #             u"{0}. {1} {2} {3}".format(
+        #                 i + 1,
+        #                 v["title"],
+        #                 v["videotime"],
+        #                 "http://youtube.com/watch?v=" + v["link"],
+        #             )
+        #         )
+        #     # let user select the song to download
+        #     result = internals.input_link(videos)
+        #     if result is None:
+        #         return None
+        # else:
+        if not self.meta_tags:
+            # if the metadata could not be acquired, take the first result
+            # from Youtube because the proper song length is unknown
+            result = videos[0]
+            log.debug("Since no metadata found on Spotify, going with the first result")
+            print("Since no metadata found on Spotify, going with the first result")
+        else:
+            # filter out videos that do not have a similar length to the Spotify song
+            duration_tolerance = 10
+            max_duration_tolerance = 20
+            possible_videos_by_duration = []
+
+            # start with a reasonable duration_tolerance, and increment duration_tolerance
+            # until one of the Youtube results falls within the correct duration or
+            # the duration_tolerance has reached the max_duration_tolerance
+            while len(possible_videos_by_duration) == 0:
+                possible_videos_by_duration = list(
+                    filter(
+                        lambda x: abs(x["seconds"] - self.meta_tags["duration"])
+                        <= duration_tolerance,
+                        videos,
                     )
                 )
-            # let user select the song to download
-            result = internals.input_link(videos)
-            if result is None:
-                return None
-        else:
-            if not self.meta_tags:
-                # if the metadata could not be acquired, take the first result
-                # from Youtube because the proper song length is unknown
-                result = videos[0]
-                log.debug("Since no metadata found on Spotify, going with the first result")
-                print("Since no metadata found on Spotify, going with the first result")
-            else:
-                # filter out videos that do not have a similar length to the Spotify song
-                duration_tolerance = 10
-                max_duration_tolerance = 20
-                possible_videos_by_duration = []
-
-                # start with a reasonable duration_tolerance, and increment duration_tolerance
-                # until one of the Youtube results falls within the correct duration or
-                # the duration_tolerance has reached the max_duration_tolerance
-                while len(possible_videos_by_duration) == 0:
-                    possible_videos_by_duration = list(
-                        filter(
-                            lambda x: abs(x["seconds"] - self.meta_tags["duration"])
-                            <= duration_tolerance,
-                            videos,
+                duration_tolerance += 1
+                if duration_tolerance > max_duration_tolerance:
+                    log.error(
+                        "{0} by {1} was not found.".format(
+                            self.meta_tags["name"],
+                            self.meta_tags["artists"][0]["name"],
                         )
                     )
-                    duration_tolerance += 1
-                    if duration_tolerance > max_duration_tolerance:
-                        log.error(
-                            "{0} by {1} was not found.".format(
-                                self.meta_tags["name"],
-                                self.meta_tags["artists"][0]["name"],
-                            )
-                        )
-                        print("{0} by {1} was not found.".format())
-                        return None
+                    print("{0} by {1} was not found.".format())
+                    return None
 
-                result = possible_videos_by_duration[0]
+            result = possible_videos_by_duration[0]
 
         if result:
             url = "http://youtube.com/watch?v={0}".format(result["link"])
@@ -360,8 +360,7 @@ class GenerateYouTubeURL:
     def api(self, bestmatch=True):
         """ Use YouTube API to search and return a list of matching videos. """
 
-        query = {"part": "snippet", "maxResults": 50, "type": "video", "q": self.search_query}
-        print(query)
+        query = {"part": "snippet", "maxResults": 50, "type": "video"}
 
         query["videoCategoryId"] = "10"
 
@@ -385,7 +384,6 @@ class GenerateYouTubeURL:
             "id": ",".join(i["id"]["videoId"] for i in data["items"]),
         }
         log.debug("query_results: {0}".format(query_results))
-        print("query_results: {0}".format(query_results))
 
         vdata = pafy.call_gdata("videos", query_results)
 
@@ -398,6 +396,7 @@ class GenerateYouTubeURL:
                 "videotime": internals.videotime_from_seconds(duration_s),
                 "seconds": duration_s,
             }
+            print(youtubedetails)
             videos.append(youtubedetails)
 
         if bestmatch:

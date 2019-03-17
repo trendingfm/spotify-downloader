@@ -167,6 +167,11 @@ def fetch_album(album):
     album = spotify.album(album_id)
     return album
 
+@must_be_authorized
+def fetch_artist(artist):
+    artist_id = internals.extract_spotify_id(artist)
+    artist = spotify.artist(artist_id)
+    return artist
 
 @must_be_authorized
 def fetch_albums_from_artist(artist_url, album_type=None):

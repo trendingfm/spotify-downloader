@@ -174,6 +174,23 @@ def fetch_artist(artist):
     return artist
 
 @must_be_authorized
+def fetch_categories():
+    categories = spotify.categories(limit=50,country="US")
+    return categories
+
+@must_be_authorized
+def fetch_category_playlists(category):
+    playlists = spotify.category_playlists(category_id=category, country="US", limit=50)
+    return playlists
+
+@must_be_authorized
+def fetch_featured_playlists():
+    featured_playlists = spotify.featured_playlists(limit=50,country="US")
+    return featured_playlists
+
+
+
+@must_be_authorized
 def fetch_albums_from_artist(artist_url, album_type=None):
     """
     This funcction returns all the albums from a give artist_url using the US

@@ -175,17 +175,29 @@ def fetch_artist(artist):
 
 @must_be_authorized
 def fetch_categories():
-    categories = spotify.categories(limit=50,country="US")
+    try:
+        categories = spotify.categories(limit=50,country="US")
+    except spotipy.client.SpotifyException:
+        print("Unable to find cat playlists "+category)
     return categories
 
 @must_be_authorized
 def fetch_category_playlists(category):
-    playlists = spotify.category_playlists(category_id=category, country="US", limit=50)
+    try:
+        playlists = spotify.category_playlists(category_id=category, country="US", limit=50)
+    except spotipy.client.SpotifyException:
+        print("Unable to find cat playlists "+category)
     return playlists
 
 @must_be_authorized
 def fetch_featured_playlists():
-    featured_playlists = spotify.featured_playlists(limit=50,country="US")
+    try:
+        featured_playlists = spotify.featured_playlists(
+            limit=50,country="US"
+        )
+    except spotipy.client.SpotifyException:
+        print("Unable to find featured_playlists")
+
     return featured_playlists
 
 

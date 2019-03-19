@@ -174,6 +174,18 @@ def fetch_artist(artist):
     return artist
 
 @must_be_authorized
+def fetch_artist_top_tracks(artist):
+    artist_id = internals.extract_spotify_id(artist)
+    top_tracks = spotify.artist_top_tracks(artist_id,country="US")
+    return top_tracks
+
+@must_be_authorized
+def fetch_artist_related_artists(artist):
+    artist_id = internals.extract_spotify_id(artist)
+    related_artists = spotify.artist_related_artists(artist_id)
+    return related_artists
+
+@must_be_authorized
 def fetch_categories():
     try:
         categories = spotify.categories(limit=50,country="US")

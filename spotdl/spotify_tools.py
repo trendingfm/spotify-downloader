@@ -194,9 +194,9 @@ def fetch_categories():
     return categories
 
 @must_be_authorized
-def fetch_search(query):
+def fetch_search(query,limit=20):
     try:
-        results = spotify.search(query, type='artist,track,album,playlist')
+        results = spotify.search(query, type='artist,track,album,playlist',limit=limit)
     except spotipy.client.SpotifyException:
         print("No search results:  "+query)
     return results

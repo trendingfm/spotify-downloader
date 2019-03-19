@@ -199,7 +199,7 @@ def fetch_search(query):
         results = spotify.search(query, type='artist,track,album,playlist')
     except spotipy.client.SpotifyException:
         print("No search results:  "+query)
-    return categories
+    return results
 
 
 @must_be_authorized

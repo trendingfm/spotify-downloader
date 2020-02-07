@@ -12,7 +12,7 @@ from spotdl import const
 # Fix download speed throttle on short duration tracks
 # Read more on mps-youtube/pafy#199
 pafy.g.opener.addheaders.append(("Range", "bytes=0-"))
-youtube_api_key = "AIzaSyBkmAbbOECg6kLmyec0JtRLo08OyGJIWdg"
+# youtube_api_key = "AIzaSyBkmAbbOECg6kLmyec0JtRLo08OyGJIWdg"
 # Implement unreleased methods on Pafy object
 # More info: https://github.com/mps-youtube/pafy/pull/211
 if pafy.__version__ <= "0.5.4":

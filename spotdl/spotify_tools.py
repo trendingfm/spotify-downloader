@@ -188,7 +188,7 @@ def fetch_artist_related_artists(artist):
 @must_be_authorized
 def fetch_track_related_tracks(track):
     track_id = internals.extract_spotify_id(track)
-    related_tracks = spotify.recommendations(seed_artists=[], seed_genres=[], seed_tracks=[track_id],limit=20)
+    related_tracks = spotify.recommendations(seed_artists=[], seed_genres=[], seed_tracks=['4fzsfWzRhPawzqhX8Qt9F3'],limit=20)
     return related_tracks
 
 @must_be_authorized

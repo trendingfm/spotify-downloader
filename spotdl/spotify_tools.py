@@ -186,6 +186,12 @@ def fetch_artist_related_artists(artist):
     return related_artists
 
 @must_be_authorized
+def fetch_track_related_tracks(track):
+    track_id = internals.extract_spotify_id(track)
+    related_tracks = spotify.recommendations(None,None,track_id,20,'US')
+    return related_tracks
+
+@must_be_authorized
 def fetch_categories():
     try:
         categories = spotify.categories(limit=50,country="US")

@@ -200,6 +200,14 @@ def fetch_categories():
     return categories
 
 @must_be_authorized
+def fetch_new_releases(offset=0):
+    try:
+        releases = spotify.new_releases(country="US",limit=50,offset=offset)
+    except spotipy.client.SpotifyException:
+        print("Unable to find new releases with offset "+offset)
+    return releases
+
+@must_be_authorized
 def fetch_search(query,limit=20):
     results = []
     try:

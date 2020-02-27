@@ -151,6 +151,24 @@ def fetch_playlist(playlist):
 
     return results
 
+@must_be_authorized
+def fetch_playlist_tracks(playlist,offset=0):
+    try:
+        playlist_id = internals.extract_spotify_id(playlist)
+    except IndexError:
+        # Wrong format, in either case
+        log.error("The provided playlist URL is not in a recognized format!")
+        sys.exit(10)
+    try:
+        results = spotify.playlist_tracks(
+            playlist_id, limit=100, offset=offset, market="US"
+        )
+    except spotipy.client.SpotifyException:
+        log.error("Unable to find playlist")
+        log.info("Make sure the playlist is set to publicly visible and then try again")
+        sys.exit(11)
+
+    return results
 
 @must_be_authorized
 def write_playlist(playlist_url, text_file=None):

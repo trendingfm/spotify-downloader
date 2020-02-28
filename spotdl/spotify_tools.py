@@ -160,8 +160,8 @@ def fetch_playlist_tracks(playlist,offset=0):
         log.error("The provided playlist URL is not in a recognized format!")
         sys.exit(10)
     try:
-        results = spotify.playlist_tracks(
-            playlist_id, limit=100, offset=offset, market="US"
+        results = spotify.user_playlist_tracks(
+            user=None, playlist_id=playlist_id, limit=100, offset=offset, market="US"
         )
     except spotipy.client.SpotifyException:
         log.error("Unable to find playlist")
